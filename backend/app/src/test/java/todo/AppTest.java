@@ -8,7 +8,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
     @Test void appHasAGreeting() {
+
         App classUnderTest = new App();
+
+
         assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+    }
+
+    @Test void testing() {
+
+        var testing = "hello there";
+        assertEquals(testing, "hello world");
     }
 }
