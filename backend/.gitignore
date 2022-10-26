@@ -157,3 +157,6 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,java,eclipse,gradle,vim
 
+### Intellij
+.idea
+.ideavimrc
