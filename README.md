@@ -11,7 +11,11 @@ Steps to run backend locally:
 Backend will run on localhost port 4567
 
 Current available Endpoints:
+
 GET `/hello` -> Get a "Hello world" message
+
 GET `/todos` -> Get a list of todos
+
 GET `/todo/:id` -> Get todo with specific id
+
 POST `/todo` -> Create a new todo. Accepts json in request body in format `{"message": "The todo message"}` 
