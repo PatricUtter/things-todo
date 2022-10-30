@@ -9,6 +9,7 @@ public class Routes {
   public void setup() {
     Gson gson = new Gson();
 
+    // GETs
     get("/hello", (req, res) -> {
       return "hello world!";
     });
@@ -26,6 +27,7 @@ public class Routes {
       return new Response("success", gson.toJsonTree(todos));
     }, gson::toJson);
 
+    //POSTs
     get("/todo/:id", (req, res) -> {
 
       var jdbi = DB.getJdbi();
@@ -52,12 +54,41 @@ public class Routes {
       var todo = gson.fromJson(req.body(), Todo.class);
 
       jdbi.useHandle(handle -> {
-        handle.execute("insert into todo (status, message) values (?, ?)", "OPEN", todo.getMessage());
+        handle.createUpdate("insert into todo (status, message) values (:status, :message)").bind("status", "OPEN").bind("message", todo.getMessage()).execute();
       });
 
       return new Response("success", "TODO created");
 
     }, gson::toJson);
+
+    //PUTs
+    put("/todo/:id", (req, res) -> {
+      var jdbi = DB.getJdbi();
+      var todo = gson.fromJson(req.body(), Todo.class);
+
+      int id = Integer.parseInt(req.params("id"));
+
+      jdbi.useHandle(handle -> {
+        handle.createUpdate("update todo set status = :status, message = :message where id = :id").bind("status", todo.getStatus()).bind("message", todo.getMessage()).bind("id", id).execute();
+      });
+
+      return new Response("success", "TODO updated");
+    }, gson::toJson);
+    
+    //DELETEs
+    delete("/todo/:id", (req, res) -> {
+      var jdbi = DB.getJdbi();
+
+      int id = Integer.parseInt(req.params("id"));
+
+      jdbi.useHandle(handle -> {
+        handle.createUpdate("delete from todo where id = :id").bind("id", id).execute();
+      });
+
+      return new Response("success", "TODO deleted");
+    }, gson::toJson);
   }
+
+
 
 }
