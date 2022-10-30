@@ -19,3 +19,7 @@ GET `/todos` -> Get a list of todos
 GET `/todo/:id` -> Get todo with specific id
 
 POST `/todo` -> Create a new todo. Accepts json in request body in format `{"message": "The todo message"}` 
+
+PUT `/todo/:id` -> Update todo. Accepts json in request body in format `{"message": "The todo message"}` 
+
+DELETE `/todo:id` -> Deletes a todo
